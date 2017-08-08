@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Square login form Responsive Widget  Website Template | Home:: w3layouts</title>
+<!-- Custom Theme files -->
+<link href="/css/login/style.css" rel="stylesheet" type="text/css" media="all"/>
+<!-- Custom Theme files -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<meta name="keywords" content="Square login form web template, Sign up Web Templates, Flat Web Templates, Login signup Responsive web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony Ericsson, Motorola web design" />
+</head>
+<body>
+<!--header start here-->
+<div class="login-form">
+			<div class="top-login">
+				<span><img src="/css/images/group.png" alt=""/></span>
+			</div>
+			<h1>Login</h1>
+			<div class="login-top">
+			<form action="/login" method="post">
+				<div class="login-ic">
+					<i ></i>
+					<input type="text"  name="userName" placeholder="请输入用户名"/>
+					<div class="clear"> </div>
+				</div>
+				<div class="login-ic">
+					<i class="icon"></i>
+					<input type="password" name="password" placeholder="请输入密码"/>
+					<div class="clear"> </div>
+				</div>
+			
+				<div class="log-bwn">
+					<input type="submit"  value="Login">
+				</div>
+				<div style="text-align: right;">
+					<a href="/forget">忘记密码</a>
+				</div>
+				</form>
+			</div>
+</div>		
+<!--header start here-->
+</body>
+</html>

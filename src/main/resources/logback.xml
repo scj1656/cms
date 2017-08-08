@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE configuration>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+	<contextName>riskcenter</contextName>
+	<property name="LOG_CHARSET" value="UTF-8" />
+	<property name="LOG_PATH" value="/logback" />
+
+	<!-- 控制台输出日志 -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} -
+				%msg%n</pattern>
+		</layout>
+	</appender>
+
+	<!-- dal -->
+	<appender name="cms"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${LOG_PATH}/cms.log</File>
+		<Encoding>${LOG_CHARSET}</Encoding>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>
+				${LOG_PATH}/cms-%d{yyyy-MM-dd}.%i.log
+			</FileNamePattern>
+			<!-- keep 30 days worth of history -->
+			<MaxHistory>30</MaxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<!-- rollover daily or whenever the file size reaches 50MB -->
+				<maxFileSize>50MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern> %d{yyyy-MM-dd HH:mm:ss.SSS} %X{INSIGHT_REQUEST_ID} %-5level
+				%logger{0} - %msg%n</Pattern>
+		</layout>
+	</appender>
+
+	
+
+	<!-- dal package -->
+	<logger name="com.cms" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="cms" />
+	</logger>
+
+</configuration>

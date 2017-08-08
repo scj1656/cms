@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cms.dao.UserDao">
+
+	<resultMap type="com.cms.model.user.UserDO" id="userResultMap">
+        <id property="id" column="id"/>
+        <result property="userName" column="user_name"/>
+        <result property="password" column="password"/>
+        <result property="phone" column="phone"/>
+        <!-- ofType指定students集合中的对象类型 -->
+        <collection property="roles" ofType="com.cms.model.user.RoleDO">
+            <id property="roleName" column="role_name"/>
+        </collection>
+        <collection property="permissions" ofType="com.cms.model.user.PermissionDO">
+            <id property="name" column="name"/>
+        </collection>
+    </resultMap>
+    
+	<sql id="user_all_column">
+		`id`, `user_name` userName, `password`, `phone`, `create_time` createTime, `update_time` updateTime
+	</sql>
+	
+	<sql id="user_select_all">
+		select <include refid="user_all_column"/> from user where 1=1
+	</sql>
+	
+	<select id="queryUserDetail" parameterType="com.cms.model.user.query.UserQo" resultMap="userResultMap">
+		select * from user u,role r,user_role ur,permission p,role_permission rp 
+		where u.id=ur.user_id and r.id=ur.role_id and r.id=rp.role_id and p.id = rp.permission_id
+		<if test="id !=null">
+			u.id = #{id}
+		</if>
+		<if test="userName !=null and userName!=''">
+			u.user_name = #{userName}
+		</if>
+		<if test="password !=null and password!=''">
+			u.password = #{password}
+		</if>
+	</select>
+	
+	
+	<sql id="user_if_sql">
+		<if test="id !=null">
+			id = #{id}
+		</if>
+		<if test="userName !=null and userName!=''">
+			user_name = #{userName}
+		</if>
+		<if test="password !=null and password!=''">
+			password = #{password}
+		</if>
+	</sql>
+	
+	<select id="query" parameterType="com.cms.model.user.query.UserQo" resultType="com.cms.model.user.UserDO">
+		<include refid="user_select_all"/>
+		<include refid="user_if_sql"/>
+	</select>
+	
+	<insert id="insert"  useGeneratedKeys="true" keyProperty="id" parameterType="com.cms.model.user.UserDO">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userName != null and userName !=''" >`user_name`, </if>
+      <if test="password != null and password !=''" >`password`, </if>
+      <if test="phone != null" >`phone`, </if>
+      `create_time`,
+      `update_time`
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userName != null and userName !=''" >#{userName}, </if>
+      <if test="password != null and password !=''" >#{password}, </if>
+      <if test="phone != null" >#{phone}, </if>
+      now(),
+      now()
+    </trim>
+  </insert>
+ 
+  <update id="update" parameterType="com.cms.model.user.UserDO" >
+    update user
+    <set>
+      <if test="userName != null and userName !=''" >user_name = #{userName}, </if>
+      <if test="password != null and password !=''" >password = #{password}, </if>
+      <if test="phone != null" >phone = #{phone}, </if>
+      	update_time = now()
+    </set>
+    where id = #{id}
+  </update>
+	
+</mapper>

@@ -1,0 +1,13 @@
+Ext.define('CMS.controller.Controller',{
+	extend:'Ext.app.Controller',//一定要继承controller
+	//添加view，让控制器找到
+	views:[
+	       'Accordion',
+	       'Center',
+	       'Top',
+	       'Bottom'
+	       ],
+	init:function(){
+		console.log('asdasdasda');
+	}
+});
